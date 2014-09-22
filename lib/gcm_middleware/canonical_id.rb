@@ -1,20 +1,18 @@
-module GCMMiddleware
-  class CanonicalId
-    def initialize(app, options = {})
-      @app = app
-    end
+require 'faraday'
 
+module GCMMiddleware
+  class CanonicalId < Faraday::Middleware
     def call(env)
       save_ids(env.body)
 
-      app.call(env).on_complete do |env|
+      @app.call(env).on_complete do |env|
         inject_original_ids(env.body) if has_registration_ids && env.body
       end
     end
 
     private
 
-    attr_reader :registration_ids, :app
+    attr_reader :registration_ids
 
     def inject_original_ids(body)
       body['results'].each_with_index do |result, i|
