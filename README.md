@@ -1,5 +1,8 @@
 # GcmMiddleware
 
+[![Build Status](https://travis-ci.org/tjohn/gcm_middleware.svg?branch=master)](https://travis-ci.org/tjohn/gcm_middleware)
+[![Code Climate](https://codeclimate.com/github/tjohn/gcm_middleware/badges/gpa.svg)](https://codeclimate.com/github/tjohn/gcm_middleware)
+
 Faraday ( https://github.com/lostisland/faraday ) middleware for Google Cloud Messaging. 
 
 ## Installation
