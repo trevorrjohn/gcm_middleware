@@ -1,8 +1,5 @@
 language: ruby
 rvm:
   - 2.1.2
-addons:
-  code_climate:
-    repo_token: <%= ENV['CODE_CLIMATE_TOKEN'] %>
 before_install:
   - gem install bundler
