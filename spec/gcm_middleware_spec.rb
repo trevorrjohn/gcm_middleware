@@ -22,13 +22,13 @@ describe GCMMiddleware do
         f.use :gcm_canonical_id
 
         f.adapter :test do |stub|
-          stub.post('/test') { |env| [ 200, {}, {'results' => [{}]} ] }
+          stub.post('/gcm/send') { |env| [ 200, {}, {'results' => [{}]} ] }
         end
       end
     end
 
     it 'registers :gcm_canonical_id' do
-      response = faraday.post('test', { 'registration_ids' => ['1'] })
+      response = faraday.post('/gcm/send', { 'registration_ids' => ['1'] })
 
       expect(response.body['results'][0]['original_id']).to eq '1'
     end

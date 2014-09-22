@@ -1,14 +1,16 @@
+
 describe GCMMiddleware::CanonicalId do
   let(:response) { faraday.post(path, request_body) }
   let(:path) { '/gcm/send' }
   let(:status_code) { 200 }
   let(:raw_response) { {} }
+  let(:response_object) { [status_code, {}, raw_response] }
   let(:faraday) do
     Faraday.new('http://www.example.com') do |builder|
       builder.use GCMMiddleware::CanonicalId
 
       builder.adapter :test do |stub|
-        stub.post('/gcm/send') { |env| [ status_code, {}, raw_response ] }
+        stub.post('/gcm/send') { |env| response_object }
         stub.post('/other') { |env| [ 200, {}, raw_response ] }
       end
     end
@@ -91,6 +93,13 @@ describe GCMMiddleware::CanonicalId do
       end
 
       it_behaves_like 'a gcm request'
+
+      context 'with json request' do
+        let(:response_object) { [status_code, {}, raw_response.to_json] }
+        let(:response) { faraday.post(path, request_body.to_json) }
+
+        it_behaves_like 'a gcm request'
+      end
     end
   end
 end
