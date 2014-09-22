@@ -4,3 +4,5 @@ rvm:
 addons:
   code_climate:
     repo_token: <%= ENV['CODE_CLIMATE_TOKEN'] %>
+before_install:
+  - gem install bundler
